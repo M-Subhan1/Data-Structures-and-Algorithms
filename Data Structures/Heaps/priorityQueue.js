@@ -21,7 +21,7 @@ class PriorityQueue {
     while (index > 0) {
       parentIndex = Math.floor((index - 1) / 2);
 
-      if (this.values[index].priority <= this.values[parentIndex].priority)
+      if (this.values[index].priority > this.values[parentIndex].priority)
         break;
 
       temp = this.values[index];
@@ -60,15 +60,15 @@ class PriorityQueue {
       rightChild = rightChildIdx < length ? this.values[rightChildIdx] : null;
 
       if (
-        (!rightChild && element.priority > leftChild.priority) ||
+        (!rightChild && element.priority < leftChild.priority) ||
         (rightChild &&
-          element.priority > leftChild.priority &&
-          element.priority > rightChild.priority)
+          element.priority < leftChild.priority &&
+          element.priority < rightChild.priority)
       )
         break;
 
       swap =
-        !rightChild || leftChild.priority > rightChild.priority
+        !rightChild || leftChild.priority < rightChild.priority
           ? leftChildIdx
           : rightChildIdx;
 
@@ -82,16 +82,4 @@ class PriorityQueue {
   }
 }
 
-const queue = new PriorityQueue();
-queue.enqueue(1, 1);
-queue.enqueue(2, 2);
-queue.enqueue(3, 3);
-queue.enqueue(4, 4);
-queue.enqueue(5, 5);
-queue.dequeue();
-queue.dequeue();
-queue.dequeue();
-queue.dequeue();
-queue.dequeue();
-
-console.log(queue.values.map(el => el.value));
+module.exports = PriorityQueue;
